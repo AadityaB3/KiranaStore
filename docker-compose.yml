@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: smart_kirana_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: smart_kirana
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart_kirana_backend
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/smart_kirana
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: 8f2a584370db0a75dcb0e76fb2137cd5359a35cc2357ef354ca790a16cc1c9b6f849c719e7a68e31a18bc009be8b1ffadfa3514b8db474c3d3a0e6983082bbfb
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  postgres_data:

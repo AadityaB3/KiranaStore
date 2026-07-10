@@ -1,0 +1,6 @@
+{
+  "name": "Smart Kirana",
+  "description": "A smart offline-first local grocery store with 3 distinct dashboards (Customer, Owner, Delivery) and custom order workflows.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
